@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import { useRouter } from "next/router";
 
 import { topics } from "../utils/constants";
 import useAuthStore from "../store/authStore";
 import axios from "axios";
 
-const VideoForm = ({ videoAsset }: { videoAsset: any }) => {
+interface IProps {
+  videoAsset: any;
+  setVideoAsset: Dispatch<SetStateAction<any>>;
+}
+
+const VideoForm = ({ videoAsset, setVideoAsset }: IProps) => {
   const [caption, setCaption] = useState("");
   const [category, setCategory] = useState(topics[0].name);
   const [isSavingPost, setIsSavingPost] = useState(false);
@@ -45,13 +50,21 @@ const VideoForm = ({ videoAsset }: { videoAsset: any }) => {
     }
   };
 
-  const handleDiscard = () => {};
+  const handleDiscard = () => {
+    setIsSavingPost(false);
+    setVideoAsset(undefined);
+    setCaption("");
+    setCategory("");
+  };
+
+  if (isSavingPost) return <p className="text-lg">Saving Post...</p>;
 
   return (
     <section className="flex flex-col gap-3 pb-10">
       <label htmlFor="caption" className="text-md font-medium">
         Caption
       </label>
+
       <input
         type="text"
         id="caption"
@@ -59,9 +72,11 @@ const VideoForm = ({ videoAsset }: { videoAsset: any }) => {
         onChange={(e) => setCaption(e.target.value)}
         className="rounded outline-none text-md border-2 border-gray-200 p-2"
       />
+
       <label htmlFor="category" className="text-md font-medium">
         Choose a category
       </label>
+
       <select
         id="category"
         onChange={(e) => setCategory(e.target.value)}
@@ -77,6 +92,7 @@ const VideoForm = ({ videoAsset }: { videoAsset: any }) => {
           </option>
         ))}
       </select>
+
       <div className="flex gap-6 mt-10 ">
         <button
           type="button"

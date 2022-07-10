@@ -55,7 +55,7 @@ const Upload = () => {
           />
         </div>
 
-        <VideoForm videoAsset={videoAsset} />
+        <VideoForm videoAsset={videoAsset} setVideoAsset={setVideoAsset} />
       </div>
     </div>
   );

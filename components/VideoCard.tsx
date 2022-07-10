@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { NextPage } from "next";
@@ -39,6 +39,29 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
         videoRef.current.muted = true;
       }
     }
+  };
+
+  const hasAudio = (video: any) => {
+    if (!video) return;
+
+    let result;
+
+    if (typeof video.webkitAudioDecodedByteCount !== "undefined") {
+      // non-zero if video has audio track
+      if (video.webkitAudioDecodedByteCount > 0) result = true;
+      else result = false;
+    } else if (typeof video.mozHasAudio !== "undefined") {
+      // true if video has audio track
+      if (video.mozHasAudio) result = true;
+      else result = false;
+    } else console.log("can't tell if video has audio");
+
+    // result =
+    //   video?.mozHasAudio ||
+    //   Boolean(video?.webkitAudioDecodedByteCount > 0) ||
+    //   Boolean(video?.audioTracks && video?.audioTracks.length);
+
+    return result;
   };
 
   return (
@@ -96,12 +119,14 @@ const VideoCard: NextPage<IProps> = ({ post }) => {
                 )}
               </button>
 
-              <button onClick={handleMuted}>
-                {isMuted ? (
-                  <HiVolumeOff className="text-white text-2xl lg:text-4xl" />
-                ) : (
-                  <HiVolumeUp className="text-white text-2xl lg:text-4xl" />
-                )}
+              <button
+                onClick={handleMuted}
+                disabled={!hasAudio(videoRef?.current)}
+                className={`${
+                  !hasAudio(videoRef?.current) ? "text-gray-600" : "text-white"
+                } text-2xl lg:text-4xl`}
+              >
+                {isMuted ? <HiVolumeOff /> : <HiVolumeUp />}
               </button>
             </div>
           )}
