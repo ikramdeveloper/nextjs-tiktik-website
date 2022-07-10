@@ -1,7 +1,12 @@
-import { BsCode, BsEmojiSunglasses } from "react-icons/bs";
-import { GiCakeSlice, GiGalaxy, GiLipstick } from "react-icons/gi";
-import { FaPaw, FaMedal, FaGamepad } from "react-icons/fa";
-import { MdWallpaper } from "react-icons/md";
+import { BsCode } from "react-icons/bs";
+import {
+  GiCakeSlice,
+  GiGalaxy,
+  GiHeartBeats,
+  GiMusicSpell,
+} from "react-icons/gi";
+import { FaPaw, FaMedal } from "react-icons/fa";
+import { MdWallpaper, MdEmojiNature } from "react-icons/md";
 
 export const topics = [
   {
@@ -9,11 +14,7 @@ export const topics = [
     icon: <BsCode />,
   },
   {
-    name: "comedy",
-    icon: <BsEmojiSunglasses />,
-  },
-  {
-    name: "wallpaper",
+    name: "background",
     icon: <MdWallpaper />,
   },
   {
@@ -25,8 +26,8 @@ export const topics = [
     icon: <GiGalaxy />,
   },
   {
-    name: "beauty",
-    icon: <GiLipstick />,
+    name: "nature",
+    icon: <MdEmojiNature />,
   },
   {
     name: "animals",
@@ -35,6 +36,14 @@ export const topics = [
   {
     name: "sports",
     icon: <FaMedal />,
+  },
+  {
+    name: "love",
+    icon: <GiHeartBeats />,
+  },
+  {
+    name: "music",
+    icon: <GiMusicSpell />,
   },
 ];
 

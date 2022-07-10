@@ -1,4 +1,3 @@
-import type { NextPage } from "next";
 import Head from "next/head";
 import axios from "axios";
 
@@ -18,19 +17,31 @@ const Home = ({ videos }: IProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="flex flex-col gap-10 h-full videos">
+      <main className="flex flex-col gap-10 h-full videos">
         {videos?.length > 0 ? (
           videos.map((item: IVideo) => <VideoCard key={item._id} post={item} />)
         ) : (
           <NoResults text="No Videos" />
         )}
-      </div>
+      </main>
     </div>
   );
 };
 
-export const getServerSideProps = async () => {
-  const res = await axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/post`);
+export const getServerSideProps = async ({
+  query: { topic },
+}: {
+  query: { topic: string };
+}) => {
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
+
+  let res = null;
+
+  if (topic) {
+    res = await axios.get(`${BASE_URL}/api/discover/${topic}`);
+  } else {
+    res = await axios.get(`${BASE_URL}/api/post`);
+  }
 
   return {
     props: {

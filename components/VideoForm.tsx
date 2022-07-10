@@ -36,7 +36,10 @@ const VideoForm = ({ videoAsset }: { videoAsset: any }) => {
         topic: category,
       };
 
-      await axios.post(`process.env.NEXT_PUBLIC_BASE_URL/api/post`, document);
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/post`,
+        document
+      );
 
       router.push("/");
     }
